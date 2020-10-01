@@ -1,24 +1,19 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { useSelector, useDispatch } from 'react-redux';
+// useSelector để truy xuất dữ liệu từ store
+// useDispatch để truy xuất tới actions
+import { increment, isLogged } from './actions'
 function App() {
+  const counter = useSelector(state => state.counter);
+  const islogged = useSelector(state => state.islogged);
+  const dispatch = useDispatch();
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div >
+      <h1>Counter: {counter}</h1>
+      {/* Không được gọi trực tiếp phương thức làm thay đổi state trong store */}
+      <button onClick={() => dispatch(increment(5))}>+</button>
+      <button onClick={() => dispatch(isLogged())}>Is Show?</button>
+      {islogged ? <h3>Valueable Information I shouldn't see</h3> : ""}
     </div>
   );
 }
